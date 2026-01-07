@@ -6,4 +6,8 @@ commit 1 -- Initialised the campus connect project ,made the folder structure an
 commit 2 -- made the two schemas ->the user schema and the request schema and learnt some important code syntaxes.
 
 7/01/2026 - 7:13 PM
-commit 3 -- made the db.js that is made the connection to databse using nongo uri
+commit 3 -- made the db.js that is made the connection to databse using mongo uri
+
+
+7/01/2026 - 7:58
+commit 4 -- update the server.js to get the mongo uri from .env and also import express, start the server and make the server listen,also tested the route by sending a message to the home page
