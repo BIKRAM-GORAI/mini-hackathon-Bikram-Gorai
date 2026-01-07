@@ -5,3 +5,5 @@ commit 1 -- Initialised the campus connect project ,made the folder structure an
 7/01/2026 - 11:46 AM
 commit 2 -- made the two schemas ->the user schema and the request schema and learnt some important code syntaxes.
 
+7/01/2026 - 7:13 PM
+commit 3 -- made the db.js that is made the connection to databse using nongo uri
