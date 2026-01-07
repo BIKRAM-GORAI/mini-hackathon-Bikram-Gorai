@@ -14,7 +14,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/BIKRAM-GORAI/mini-hackathon-Bikram-Gorai/issues"
   },
@@ -29,4 +29,5 @@
   "devDependencies": {
     "nodemon": "^3.1.11"
   }
+  
 }
