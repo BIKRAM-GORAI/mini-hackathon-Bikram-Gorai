@@ -2,6 +2,7 @@ import express from "express";
 import "dotenv/config"; 
 import connectDB from "./config/db.js"//connection function 
 import authRoutes from "./routes/authRoutes.js";//importing authRoutes so that we can use login and register
+import requestRoutes from "./routes/requestRoutes.js";
 
 const app=express();//making a express instance
 app.use(express.json());
@@ -17,6 +18,14 @@ app.get("/",(req,res)=>{
 //it will return this message when visiting the home page in the frontend
 
 app.use("/api/auth",authRoutes);
+
+app.use("/api/requests",requestRoutes)
+
+app.use((req, res, next) => {
+  console.log(req.method, req.url);
+  next();
+});
+
 
 const PORT=process.env.PORT || 5000;
 
