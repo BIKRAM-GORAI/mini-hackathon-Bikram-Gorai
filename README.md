@@ -19,3 +19,9 @@ commit 5 --  made the authroutes.Js for the login and register and linked them t
 commit 6  --  made the create view accept and complete request route and connected it via server.js 
 also tested all the routes via postman
  (debugged many errors ,aleast 20-30 errors ,silly syntax mistakes ,routes redirectig mistakes , Laernt to use the og command [console.error(error)],Trough this command I was able to solve 70% of the errors in the synatax ,I learnt many things)
+
+
+ 15/01/2026 -- 11:24 AM
+commit 7 --  made the create request.html page to create requests and also written the sending data logic in the requests.js
+
+Also understood why live server doesnt work in express servers 

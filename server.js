@@ -4,6 +4,10 @@ import connectDB from "./config/db.js"//connection function
 import authRoutes from "./routes/authRoutes.js";//importing authRoutes so that we can use login and register
 import requestRoutes from "./routes/requestRoutes.js";
 
+import path from "path";
+import { fileURLToPath } from "url";
+
+
 const app=express();//making a express instance
 app.use(express.json());
 
@@ -27,9 +31,30 @@ app.use((req, res, next) => {
 });
 
 
+
+
+//!         refer to thoughts8.txt for line to line explanation of the next few connection lines
+// Convert import.meta.url to file path
+const __filename = fileURLToPath(import.meta.url);
+
+// Get directory name from file path
+const __dirname = path.dirname(__filename);
+
+// Serve static files from public folder
+app.use(express.static(path.join(__dirname, "public")));
+
+// Serve create-request page
+app.get("/create-request", (req, res) => {
+  res.sendFile(path.join(__dirname, "views", "create-request.html"));
+});
+
+
+
+
+
+
+
 const PORT=process.env.PORT || 5000;
-
-
 app.listen(PORT,()=>{
     console.log(`🚀 Server running at http://localhost:${PORT}`);
 });
