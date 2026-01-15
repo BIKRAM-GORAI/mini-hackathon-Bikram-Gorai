@@ -1,77 +1,69 @@
-import express from "express"
-import bcrypt from "bcryptjs"
+import express from "express";
+import bcrypt from "bcryptjs";
 import User from "../models/User.js";
 
-const router = express.Router();//creating a express router so that we can attach routes like /register and /login
-
+const router = express.Router(); //creating a express router so that we can attach routes like /register and /login
 
 //now logic for register user
 
-router.post("/register",async(req,res)=>{
-    try{
-        const{name,email,password}=req.body;//this line meaning is written in the  file authRouteshelp.txt
+router.post("/register", async (req, res) => {
+  try {
+    const { name, email, password } = req.body; //this line meaning is written in the  file authRouteshelp.txt
 
-        if(!name||!email||!password)
-        {
-            return res.status(400).json({message:"All fields are required"})
-        }
-
-        const existingUser=await User.findOne({email});
-
-        if(existingUser)
-        {
-            return res.status(400).json({message:"User already exists"})
-        }
-
-        const hashedpassword=await bcrypt.hash(password,7);
-
-        const newUser= new User({
-            name,
-            email,
-            password:hashedpassword,
-        })//storing the new details in newUser
-
-        await newUser.save();//adding the newUser in database
-
-        res.status(201).json({message:"user registered successfully"})
-
-    }catch(error){
-        res.status(500).json({message:"server error"})
-
+    if (!name || !email || !password) {
+      return res.status(400).json({ message: "All fields are required" });
     }
-})
 
+    const existingUser = await User.findOne({ email });
 
-router.post("/login",async(req,res)=>{
-    try{
-        const{email,password}=req.body;
-
-        if(!email||!password){
-            return res.status(400).json({message:"All fields are required"})
-        }
-        const user=await User.findOne({email});
-        if(!user)
-        {
-            return res.status(400).json({message:"Invalid credentials"});
-        }
-
-        const isMatch=await bcrypt.compare(password,user.password);
-        if (!isMatch)
-        {
-            return res.status(400).json({message:"Invalid credentials"})
-        }
-
-        return res.status(200).json({message:"Login Sucessful"})
-
-    }catch(error){
-        return res.status(500).json({message:"server error"})
+    if (existingUser) {
+      return res.status(400).json({ message: "User already exists" });
     }
+
+    const hashedpassword = await bcrypt.hash(password, 7);
+
+    const newUser = new User({
+      name,
+      email,
+      password: hashedpassword,
+    }); //storing the new details in newUser
+
+    await newUser.save(); //adding the newUser in database
+
+    res.status(201).json({ message: "user registered successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "server error" });
+  }
 });
 
+router.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
+
+    return res.status(200).json({
+      message: "Login successful",
+      userId: user._id,
+      name: user.name,
+    });
+  } catch (error) {
+    return res.status(500).json({ message: "server error" });
+  }
+});
 
 export default router;
-
-
 
 // !  QUESTIONS YOU MUST BE ABLE TO ANSWER
 
@@ -81,7 +73,7 @@ export default router;
 
 //!  Why is bcrypt.compare async?
 //*one very very important concept here
-//^ we use async so that other node js functions keep running or else 
+//^ we use async so that other node js functions keep running or else
 //     🧪 Let’s imagine a real situation (this is the key)
 
 // Your server has 100 users online.
@@ -107,10 +99,6 @@ export default router;
 // User E → frozen
 // Even though they have nothing to do with login.
 // That is the real problem.
-
-
-
-
 
 // Why do we check user existence before register?
 //=>to prevent duplication and conflicts

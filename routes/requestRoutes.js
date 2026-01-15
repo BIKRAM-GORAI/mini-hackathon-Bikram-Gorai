@@ -30,9 +30,31 @@ router.post("/", async (req, res) => {
 
 //for fetching requests
 
+// router.get("/", async (req, res) => {
+//   try {
+//     const requests = await Request.find({ status: "OPEN" });
+
+//     return res.status(200).json(requests);
+//   } catch (error) {
+//     return res.status(500).json({ message: "Cannot get requests from server" });
+//   }
+// });
+
 router.get("/", async (req, res) => {
   try {
-    const requests = await Request.find({ status: "OPEN" });
+    const { userId } = req.query;
+
+    // If userId is not sent, fallback to only OPEN requests
+    if (!userId) {
+      const requests = await Request.find({ status: "OPEN" });
+      return res.status(200).json(requests);
+    }
+
+    // OPEN requests for everyone
+    // ACCEPTED requests only for the owner
+    const requests = await Request.find({
+      $or: [{ status: "OPEN" }, { status: "ACCEPTED", createdBy: userId }],
+    });
 
     return res.status(200).json(requests);
   } catch (error) {
@@ -46,7 +68,6 @@ router.post("/:id/accept", async (req, res) => {
 
     const { userId } = req.body; //getting the helper id from req.body that is send from the frontend
     //more details in requesrrouteshelp.txt
-
 
     const requestPresent = await Request.findById(requestId);
     if (!requestPresent) {
@@ -98,7 +119,6 @@ router.post("/:id/complete", async (req, res) => {
 
     return res.status(200).json({ message: "Request marked as completed" });
   } catch (error) {
-
     return res.status(500).json({ message: "server error" });
   }
 });

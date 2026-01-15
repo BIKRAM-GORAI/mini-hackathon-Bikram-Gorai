@@ -9,9 +9,13 @@ form.addEventListener("submit", async (e) => {
   const category = document.getElementById("category").value;
   const description = document.getElementById("description").value;
 
-  // TEMPORARY userId (since no JWT)
-  // Later this will come from logged-in user
-  const userId = "695f42147f0a8a4c8b40a35f";
+  // Get logged-in userId from localStorage
+  const userId = localStorage.getItem("userId");
+
+  // If user is not logged in, redirect to login
+  if (!userId) {
+    window.location.href = "/login";
+  }
 
   try {
     const response = await fetch("/api/requests", {
@@ -19,7 +23,7 @@ form.addEventListener("submit", async (e) => {
 
       // Tell backend we are sending JSON
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
 
       // Convert JS object to JSON string
@@ -27,8 +31,8 @@ form.addEventListener("submit", async (e) => {
         title,
         category,
         description,
-        userId
-      })
+        userId,
+      }),
     });
 
     const data = await response.json();

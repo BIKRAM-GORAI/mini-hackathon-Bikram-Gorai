@@ -25,3 +25,16 @@ also tested all the routes via postman
 commit 7 --  made the create request.html page to create requests and also written the sending data logic in the requests.js
 
 Also understood why live server doesnt work in express servers 
+
+
+15/01/2026  -- 4:02
+
+commit 8 - fixed the entire logic of the backend
+many major changes
+->made the login and register page and after logging in storing the data in the localstorage
+
+->made the dahboard page which has 2 buttons create and accept requests and it also welcomes the user using the data stored in the local storage
+
+->next the create request page , the user can create his requests
+
+->browse requests page , here all the open requests are shown for the helper to accept and the requests which are accepted are shown only to the owner to be markd as completed.

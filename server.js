@@ -4,6 +4,7 @@ import connectDB from "./config/db.js"//connection function
 import authRoutes from "./routes/authRoutes.js";//importing authRoutes so that we can use login and register
 import requestRoutes from "./routes/requestRoutes.js";
 
+
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -16,10 +17,10 @@ app.use(express.json());
 
 connectDB();//databse  connection function calling
 
-app.get("/",(req,res)=>{
-    res.send("mongo db connection successful")
-});//it is a test route 
-//it will return this message when visiting the home page in the frontend
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "views", "index.html"));
+});
+
 
 app.use("/api/auth",authRoutes);
 
@@ -33,7 +34,7 @@ app.use((req, res, next) => {
 
 
 
-//!         refer to thoughts8.txt for line to line explanation of the next few connection lines
+//!      refer to thoughts8.txt for line to line explanation of the next few connection lines
 // Convert import.meta.url to file path
 const __filename = fileURLToPath(import.meta.url);
 
@@ -47,7 +48,27 @@ app.use(express.static(path.join(__dirname, "public")));
 app.get("/create-request", (req, res) => {
   res.sendFile(path.join(__dirname, "views", "create-request.html"));
 });
+app.get("/browse-requests", (req, res) => {
+  res.sendFile(path.join(__dirname, "views", "requests.html"));
+});
 
+
+
+
+
+
+
+app.get("/register", (req, res) => {
+  res.sendFile(path.join(__dirname, "views", "register.html"));
+});
+
+app.get("/login", (req, res) => {
+  res.sendFile(path.join(__dirname, "views", "login.html"));
+});
+
+app.get("/dashboard", (req, res) => {
+  res.sendFile(path.join(__dirname, "views", "dashboard.html"));
+});
 
 
 
