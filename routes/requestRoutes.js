@@ -29,17 +29,6 @@ router.post("/", async (req, res) => {
 });
 
 //for fetching requests
-
-// router.get("/", async (req, res) => {
-//   try {
-//     const requests = await Request.find({ status: "OPEN" });
-
-//     return res.status(200).json(requests);
-//   } catch (error) {
-//     return res.status(500).json({ message: "Cannot get requests from server" });
-//   }
-// });
-
 router.get("/", async (req, res) => {
   try {
     const { userId } = req.query;
@@ -54,7 +43,7 @@ router.get("/", async (req, res) => {
     // ACCEPTED requests only for the owner
     const requests = await Request.find({
       $or: [{ status: "OPEN" }, { status: "ACCEPTED", createdBy: userId }],
-    });
+    }).populate("acceptedBy","name");
 
     return res.status(200).json(requests);
   } catch (error) {

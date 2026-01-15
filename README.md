@@ -27,7 +27,7 @@ commit 7 --  made the create request.html page to create requests and also writt
 Also understood why live server doesnt work in express servers 
 
 
-15/01/2026  -- 4:02
+15/01/2026  -- 4:02 PM
 
 commit 8 - fixed the entire logic of the backend
 many major changes
@@ -38,3 +38,8 @@ many major changes
 ->next the create request page , the user can create his requests
 
 ->browse requests page , here all the open requests are shown for the helper to accept and the requests which are accepted are shown only to the owner to be markd as completed.
+
+
+
+15/01/2026  --  4:31 PM
+commit 9 -- fixed the acceptedBy schema field

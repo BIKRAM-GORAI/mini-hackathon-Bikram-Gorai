@@ -24,7 +24,7 @@ const requestSchema = new mongoose.Schema({
         required:true,
     },
 
-    acceptedby:{
+    acceptedBy:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"User",
         default:null,

@@ -9,11 +9,9 @@ if (!currentUserId) {
   window.location.href = "/login";
 }
 
-
 const loadRequests = async () => {
   try {
-
-    const response = await fetch(`/api/requests?userId=${currentUserId}`)
+    const response = await fetch(`/api/requests?userId=${currentUserId}`);
 
     const requests = await response.json();
 
@@ -22,7 +20,6 @@ const loadRequests = async () => {
       container.innerHTML = "<p>No requests available</p>";
       return;
     }
-
 
     requests.forEach((request) => {
       const div = document.createElement("div");
@@ -34,10 +31,7 @@ const loadRequests = async () => {
       `;
 
       // CASE 1: NOT OWNER & OPEN → Accept
-      if (
-        request.status === "OPEN" &&
-        request.createdBy !== currentUserId
-      ) {
+      if (request.status === "OPEN" && request.createdBy !== currentUserId) {
         const acceptBtn = document.createElement("button");
         acceptBtn.textContent = "Accept";
 
@@ -47,11 +41,19 @@ const loadRequests = async () => {
         div.appendChild(acceptBtn);
       }
 
-      // CASE 2: OWNER & ACCEPTED → Mark as Completed
+      // CASE 2: OWNER & ACCEPTED → Show accepted user + Mark as Completed
       if (
         request.status === "ACCEPTED" &&
         request.createdBy === currentUserId
       ) {
+        // Show who accepted the request
+        if (request.acceptedBy && request.acceptedBy.name) {
+          const acceptedInfo = document.createElement("p");
+          acceptedInfo.innerHTML = `<strong>Accepted By:</strong> ${request.acceptedBy.name}`;
+          div.appendChild(acceptedInfo);
+        }
+
+        // Mark as Completed button
         const completeBtn = document.createElement("button");
         completeBtn.textContent = "Mark as Completed";
 
@@ -68,21 +70,19 @@ const loadRequests = async () => {
       container.appendChild(div);
     });
   } catch (error) {
+    console.log(error);
     message.textContent = "Failed to load requests";
   }
 };
-
-
-
 
 const acceptRequest = async (requestId) => {
   try {
     const response = await fetch(`/api/requests/${requestId}/accept`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ userId: currentUserId })
+      body: JSON.stringify({ userId: currentUserId }),
     });
 
     const data = await response.json();
@@ -98,15 +98,14 @@ const acceptRequest = async (requestId) => {
   }
 };
 
-
 const completeRequest = async (requestId) => {
   try {
     const response = await fetch(`/api/requests/${requestId}/complete`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ userId: currentUserId })
+      body: JSON.stringify({ userId: currentUserId }),
     });
 
     const data = await response.json();
