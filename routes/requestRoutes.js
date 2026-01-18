@@ -29,27 +29,40 @@ router.post("/", async (req, res) => {
 });
 
 //for fetching requests
+// router.get("/", async (req, res) => {
+//   try {
+//     const { userId } = req.query;
+
+//     // If userId is not sent, fallback to only OPEN requests
+//     if (!userId) {
+//       const requests = await Request.find({ status: "OPEN" });
+//       return res.status(200).json(requests);
+//     }
+
+//     // OPEN requests for everyone
+//     // ACCEPTED requests only for the owner
+//       const requests = await Request.find({
+//         $or: [{ status: "OPEN" }, { status: "ACCEPTED", createdBy: userId }],
+//       }).populate("acceptedBy","name");
+
+//       return res.status(200).json(requests);
+//     } catch (error) {
+//       return res.status(500).json({ message: "Cannot get requests from server" });
+//     }
+// });
+
 router.get("/", async (req, res) => {
   try {
-    const { userId } = req.query;
-
-    // If userId is not sent, fallback to only OPEN requests
-    if (!userId) {
-      const requests = await Request.find({ status: "OPEN" });
-      return res.status(200).json(requests);
-    }
-
-    // OPEN requests for everyone
-    // ACCEPTED requests only for the owner
-    const requests = await Request.find({
-      $or: [{ status: "OPEN" }, { status: "ACCEPTED", createdBy: userId }],
-    }).populate("acceptedBy","name");
-
+    // ALWAYS return only OPEN requests
+    const requests = await Request.find({ status: "OPEN" });
     return res.status(200).json(requests);
   } catch (error) {
-    return res.status(500).json({ message: "Cannot get requests from server" });
+    return res.status(500).json({
+      message: "Cannot get open requests from server",
+    });
   }
 });
+
 
 router.post("/:id/accept", async (req, res) => {
   try {
@@ -111,6 +124,23 @@ router.post("/:id/complete", async (req, res) => {
     return res.status(500).json({ message: "server error" });
   }
 });
+
+
+router.get("/accepted/:userId", async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const requests = await Request.find({
+      status: "ACCEPTED",
+      createdBy: userId
+    }).populate("acceptedBy", "name");
+
+    res.status(200).json(requests);
+  } catch (error) {
+    res.status(500).json({ message: "Cannot get accepted requests" });
+  }
+});
+
 
 export default router;
 

@@ -52,6 +52,9 @@ app.get("/browse-requests", (req, res) => {
   res.sendFile(path.join(__dirname, "views", "requests.html"));
 });
 
+app.get("/accepted-requests", (req, res) => {
+  res.sendFile(path.join(__dirname, "views", "accepted-requests.html"));
+});
 
 
 

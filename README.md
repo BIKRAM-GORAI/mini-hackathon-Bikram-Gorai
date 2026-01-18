@@ -47,3 +47,7 @@ commit 9 -- fixed the acceptedBy schema field
 
 18/01/2026 -- 8:15 PM
 commit 10 -- made the ui of the pages
+
+18/01/2026 -- 10:29 PM
+commit 11 -- made a seperate accepted page
+

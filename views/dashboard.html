@@ -11,6 +11,8 @@
     <div class="actions">
       <button class="primary" onclick="goCreate()">Create Request</button>
       <button class="secondary" onclick="goBrowse()">View Open Requests</button>
+      <button class="accepted" onclick="goAccepted()">Accepted Requests</button>
+
     </div>
   </div>
 
@@ -78,6 +80,9 @@
     .secondary {
       background-color: #6c757d;
       color: #ffffff;
+    }
+    .accepted{
+      background-color: rgb(168, 206, 62);
     }
 
     @media (max-width: 600px) {

@@ -17,3 +17,7 @@ function goCreate() {
 function goBrowse() {
   window.location.href = "/browse-requests";
 }
+
+function goAccepted() {
+  window.location.href = "/accepted-requests";
+}
