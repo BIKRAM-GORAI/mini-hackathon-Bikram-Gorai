@@ -43,3 +43,7 @@ many major changes
 
 15/01/2026  --  4:31 PM
 commit 9 -- fixed the acceptedBy schema field
+
+
+18/01/2026 -- 8:15 PM
+commit 10 -- made the ui of the pages

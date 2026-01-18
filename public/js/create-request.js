@@ -35,7 +35,7 @@ form.addEventListener("submit", async (e) => {
       }),
     });
 
-    const data = await response.json();
+    const data = await response.json(); //what does this line do? //It parses the JSON response from the server into a JavaScript object.
     if (response.ok) {
       message.textContent = "Request created successfully";
       form.reset();
